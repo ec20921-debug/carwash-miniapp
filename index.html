@@ -14,7 +14,7 @@
         
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
@@ -29,6 +29,13 @@
             text-align: center;
             margin-bottom: 30px;
             font-size: 28px;
+        }
+        
+        h2 {
+            color: white;
+            text-align: center;
+            margin-bottom: 20px;
+            font-size: 20px;
         }
         
         .service-card {
@@ -87,28 +94,90 @@
     <div class="container">
         <h1>🚗 QuickWash<br>出張洗車サービス</h1>
         
-        <div class="service-card" onclick="selectService('basic', 5)">
-            <div class="service-title">✨ 基本洗車</div>
-            <div class="service-description">
-                外装洗浄、拭き上げ、タイヤ洗浄
+        <!-- 車種選択 -->
+        <div id="carTypeSelection">
+            <h2>🚗 車種を選択</h2>
+            
+            <div class="service-card" onclick="selectCarType('sedan', 15)">
+                <div class="service-title">🚗 セダン</div>
+                <div class="service-description">
+                    標準サイズの乗用車
+                </div>
+                <div class="service-price">$15.00</div>
             </div>
-            <div class="service-price">$5.00</div>
+            
+            <div class="service-card" onclick="selectCarType('suv', 17)">
+                <div class="service-title">🚙 SUV</div>
+                <div class="service-description">
+                    スポーツ多目的車
+                </div>
+                <div class="service-price">$17.00</div>
+            </div>
+            
+            <div class="service-card" onclick="selectCarType('onebox', 20)">
+                <div class="service-title">🚐 1BOX</div>
+                <div class="service-description">
+                    ワンボックスカー・ミニバン
+                </div>
+                <div class="service-price">$20.00</div>
+            </div>
         </div>
         
-        <div class="service-card" onclick="selectService('premium', 15)">
-            <div class="service-title">⭐ プレミアム洗車</div>
-            <div class="service-description">
-                基本洗車 + 内装清掃 + ワックス仕上げ
+        <!-- サービス選択 -->
+        <div id="serviceSelection" style="display: none;">
+            <div style="display: flex; align-items: center; margin-bottom: 16px;">
+                <button onclick="backToCarType()" style="background: white; border: none; color: #667eea; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                    ← 戻る
+                </button>
+                <h2 style="margin-left: 16px; margin-bottom: 0;">✨ サービスを選択</h2>
             </div>
-            <div class="service-price">$15.00</div>
+            
+            <div class="service-card" onclick="selectService('standard', 0)">
+                <div class="service-title">✨ スタンダード</div>
+                <div class="service-description">
+                    基本洗車（外装・内装・タイヤ）
+                </div>
+                <div class="service-price" id="priceStandard">$15.00</div>
+            </div>
+            
+            <div class="service-card" onclick="selectService('coating', 5)">
+                <div class="service-title">💎 窓コーティング + タイヤ込み</div>
+                <div class="service-description">
+                    スタンダード + 窓撥水コーティング
+                </div>
+                <div class="service-price" id="priceCoating">$20.00</div>
+            </div>
         </div>
         
-        <div class="service-card" onclick="selectService('coating', 50)">
-            <div class="service-title">💎 コーティング</div>
-            <div class="service-description">
-                プレミアム洗車 + ガラスコーティング
+        <!-- 予約時間選択 -->
+        <div id="timeSelection" style="display: none;">
+            <div style="display: flex; align-items: center; margin-bottom: 16px;">
+                <button onclick="backToService()" style="background: white; border: none; color: #667eea; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold;">
+                    ← 戻る
+                </button>
+                <h2 style="margin-left: 16px; margin-bottom: 0;">📅 予約時間を選択</h2>
             </div>
-            <div class="service-price">$50.00</div>
+            
+            <div class="info-box" style="margin-bottom: 16px; background: white;">
+                <strong>営業時間:</strong> 9:00 - 18:00<br>
+                <strong>選択したサービス:</strong> <span id="selectedServiceName"></span><br>
+                <strong>料金:</strong> $<span id="selectedPriceDisplay"></span>
+            </div>
+            
+            <div class="service-card" onclick="selectTime('09:00-12:00')">
+                <div class="service-title">🌅 午前</div>
+                <div class="service-description">9:00 - 12:00</div>
+            </div>
+            
+            <div class="service-card" onclick="selectTime('12:00-15:00')">
+                <div class="service-title">☀️ 昼</div>
+                <div class="service-description">12:00 - 15:00</div>
+            </div>
+            
+            <div class="service-card" onclick="selectTime('15:00-18:00')">
+                <div class="service-title">🌆 午後</div>
+                <div class="service-description">15:00 - 18:00</div>
+            </div>
         </div>
         
         <div class="info-box" id="userInfo" style="display:none;">
