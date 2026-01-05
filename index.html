@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QuickWash - 出張洗車予約</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+        
+        .service-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 16px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 12px rgba(0,0,0,0.15);
+        }
+        
+        .service-card.selected {
+            border: 3px solid #667eea;
+        }
+        
+        .service-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 8px;
+        }
+        
+        .service-description {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 12px;
+        }
+        
+        .service-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .info-box {
+            background: rgba(255,255,255,0.9);
+            border-radius: 12px;
+            padding: 16px;
+            margin-top: 20px;
+            color: #333;
+        }
+        
+        .user-info {
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚗 QuickWash<br>出張洗車サービス</h1>
+        
+        <div class="service-card" onclick="selectService('basic', 5)">
+            <div class="service-title">✨ 基本洗車</div>
+            <div class="service-description">
+                外装洗浄、拭き上げ、タイヤ洗浄
+            </div>
+            <div class="service-price">$5.00</div>
+        </div>
+        
+        <div class="service-card" onclick="selectService('premium', 15)">
+            <div class="service-title">⭐ プレミアム洗車</div>
+            <div class="service-description">
+                基本洗車 + 内装清掃 + ワックス仕上げ
+            </div>
+            <div class="service-price">$15.00</div>
+        </div>
+        
+        <div class="service-card" onclick="selectService('coating', 50)">
+            <div class="service-title">💎 コーティング</div>
+            <div class="service-description">
+                プレミアム洗車 + ガラスコーティング
+            </div>
+            <div class="service-price">$50.00</div>
+        </div>
+        
+        <div class="info-box" id="userInfo" style="display:none;">
+            <div class="user-info">
+                👤 <span id="userName"></span>
+            </div>
+            <div class="user-info">
+                🆔 User ID: <span id="userId"></span>
+            </div>
+        </div>
+    </div>
+    
+    <script src="app.js"></script>
+</body>
+</html>
