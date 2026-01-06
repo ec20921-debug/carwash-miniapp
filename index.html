@@ -17,6 +17,7 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
+            color: #333;
         }
         
         .container {
@@ -55,6 +56,7 @@
         
         .service-card.selected {
             border: 3px solid #667eea;
+            transform: translateY(-2px);
         }
         
         .service-title {
@@ -88,6 +90,103 @@
             font-size: 14px;
             margin-bottom: 8px;
         }
+        
+        .back-button {
+            background: white;
+            border: none;
+            color: #667eea;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+        
+        .back-button:hover {
+            background: #f0f0f0;
+        }
+        
+        .date-input {
+            width: 100%;
+            padding: 16px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .summary-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 20px;
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .summary-row:last-child {
+            border-bottom: none;
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .payment-button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 16px 32px;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 16px;
+        }
+        
+        .payment-button:hover {
+            background: #45a049;
+        }
+        
+        .hidden {
+            display: none !important;
+        }
+        
+        .loading {
+            text-align: center;
+            color: white;
+            font-size: 18px;
+            padding: 40px;
+        }
+        
+        .success-screen {
+            text-align: center;
+            color: white;
+        }
+        
+        .success-icon {
+            font-size: 80px;
+            margin-bottom: 20px;
+        }
+        
+        .success-title {
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+        
+        .booking-id {
+            background: rgba(255,255,255,0.2);
+            padding: 12px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 16px;
+        }
     </style>
 </head>
 <body>
@@ -96,72 +195,67 @@
         
         <!-- 車種選択 -->
         <div id="carTypeSelection">
-            <h2>🚗 車種を選択</h2>
+            <h2>🚗 車種を選択してください</h2>
             
             <div class="service-card" onclick="selectCarType('sedan', 15)">
                 <div class="service-title">🚗 セダン</div>
-                <div class="service-description">
-                    標準サイズの乗用車
-                </div>
+                <div class="service-description">標準サイズの乗用車</div>
                 <div class="service-price">$15.00</div>
             </div>
             
             <div class="service-card" onclick="selectCarType('suv', 17)">
                 <div class="service-title">🚙 SUV</div>
-                <div class="service-description">
-                    スポーツ多目的車
-                </div>
+                <div class="service-description">スポーツ多目的車</div>
                 <div class="service-price">$17.00</div>
             </div>
             
             <div class="service-card" onclick="selectCarType('onebox', 20)">
                 <div class="service-title">🚐 1BOX</div>
-                <div class="service-description">
-                    ワンボックスカー・ミニバン
-                </div>
+                <div class="service-description">ワンボックスカー・ミニバン</div>
                 <div class="service-price">$20.00</div>
             </div>
         </div>
         
         <!-- サービス選択 -->
-        <div id="serviceSelection" style="display: none;">
-            <div style="display: flex; align-items: center; margin-bottom: 16px;">
-                <button onclick="backToCarType()" style="background: white; border: none; color: #667eea; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold;">
-                    ← 戻る
-                </button>
-                <h2 style="margin-left: 16px; margin-bottom: 0;">✨ サービスを選択</h2>
-            </div>
+        <div id="serviceSelection" class="hidden">
+            <button class="back-button" onclick="backToCarType()">← 戻る</button>
+            <h2>✨ サービスを選択してください</h2>
             
             <div class="service-card" onclick="selectService('standard', 0)">
                 <div class="service-title">✨ スタンダード</div>
-                <div class="service-description">
-                    基本洗車（外装・内装・タイヤ）
-                </div>
+                <div class="service-description">基本洗車（外装・内装・タイヤ）</div>
                 <div class="service-price" id="priceStandard">$15.00</div>
             </div>
             
             <div class="service-card" onclick="selectService('coating', 5)">
-                <div class="service-title">💎 窓コーティング + タイヤ込み</div>
-                <div class="service-description">
-                    スタンダード + 窓撥水コーティング
-                </div>
+                <div class="service-title">💎 窓コーティング</div>
+                <div class="service-description">スタンダード + 窓撥水コーティング</div>
                 <div class="service-price" id="priceCoating">$20.00</div>
             </div>
         </div>
         
-        <!-- 予約時間選択 -->
-        <div id="timeSelection" style="display: none;">
-            <div style="display: flex; align-items: center; margin-bottom: 16px;">
-                <button onclick="backToService()" style="background: white; border: none; color: #667eea; padding: 8px 16px; border-radius: 8px; cursor: pointer; font-weight: bold;">
-                    ← 戻る
-                </button>
-                <h2 style="margin-left: 16px; margin-bottom: 0;">📅 予約時間を選択</h2>
-            </div>
+        <!-- 日付選択 -->
+        <div id="dateSelection" class="hidden">
+            <button class="back-button" onclick="backToService()">← 戻る</button>
+            <h2>📅 日付を選択してください</h2>
             
-            <div class="info-box" style="margin-bottom: 16px; background: white;">
-                <strong>営業時間:</strong> 9:00 - 18:00<br>
-                <strong>選択したサービス:</strong> <span id="selectedServiceName"></span><br>
-                <strong>料金:</strong> $<span id="selectedPriceDisplay"></span>
+            <div class="service-card">
+                <div class="service-title">📅 希望日を選んでください</div>
+                <div class="service-description">営業時間: 9:00 - 18:00</div>
+                <input type="date" id="bookingDate" class="date-input" onchange="selectDate()">
+            </div>
+        </div>
+        
+        <!-- 時間選択 -->
+        <div id="timeSelection" class="hidden">
+            <button class="back-button" onclick="backToDate()">← 戻る</button>
+            <h2>🕒 時間を選択してください</h2>
+            
+            <div class="info-box">
+                <strong>選択中:</strong><br>
+                <span id="selectedInfo">セダン - スタンダード</span><br>
+                <strong>日付:</strong> <span id="selectedDateDisplay"></span><br>
+                <strong>料金:</strong> $<span id="selectedPriceDisplay">15.00</span>
             </div>
             
             <div class="service-card" onclick="selectTime('09:00-12:00')">
@@ -180,6 +274,125 @@
             </div>
         </div>
         
+        <!-- 確認画面 -->
+        <div id="confirmationScreen" class="hidden">
+            <button class="back-button" onclick="backToTime()">← 戻る</button>
+            <h2>📝 予約内容の確認</h2>
+            
+            <div class="summary-card">
+                <div class="summary-row">
+                    <span>車種:</span>
+                    <span id="confirmCarType">セダン</span>
+                </div>
+                <div class="summary-row">
+                    <span>サービス:</span>
+                    <span id="confirmService">スタンダード</span>
+                </div>
+                <div class="summary-row">
+                    <span>日付:</span>
+                    <span id="confirmDate">2024-01-01</span>
+                </div>
+                <div class="summary-row">
+                    <span>時間:</span>
+                    <span id="confirmTime">9:00-12:00</span>
+                </div>
+                <div class="summary-row">
+                    <span>合計料金:</span>
+                    <span id="confirmPrice">$15.00</span>
+                </div>
+            </div>
+            
+            <button class="payment-button" onclick="proceedToPayment()">
+                予約する - $<span id="finalPriceButton">15.00</span>
+            </button>
+        </div>
+        
+        <!-- 決済画面（試作版） -->
+        <div id="paymentScreen" class="hidden">
+            <h2>💳 お支払い</h2>
+            
+            <div class="summary-card">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-size: 48px;">💳</div>
+                    <div style="font-size: 18px; margin: 16px 0;">ABA PayWayで決済</div>
+                    <div style="font-size: 24px; font-weight: bold; color: #667eea;">
+                        $<span id="paymentAmount">15.00</span>
+                    </div>
+                </div>
+                
+                <div style="background: #f0f0f0; padding: 16px; border-radius: 8px; margin: 20px 0; text-align: center;">
+                    <div style="font-size: 14px; color: #666;">
+                        ※ これは試作版です<br>
+                        実際のABA PayWay決済は実装後に有効になります
+                    </div>
+                </div>
+                
+                <button class="payment-button" onclick="simulatePayment()">
+                    決済完了（試作版）
+                </button>
+                
+                <button class="back-button" style="width: 100%;" onclick="backToConfirmation()">
+                    キャンセル
+                </button>
+            </div>
+        </div>
+        
+        <!-- ローディング画面 -->
+        <div id="loadingScreen" class="hidden">
+            <div class="loading">
+                <div style="font-size: 48px; margin-bottom: 20px;">⏳</div>
+                <div>予約を処理中...</div>
+                <div style="font-size: 14px; margin-top: 16px;">
+                    Airtableに保存しています
+                </div>
+            </div>
+        </div>
+        
+        <!-- 完了画面 -->
+        <div id="successScreen" class="hidden">
+            <div class="success-screen">
+                <div class="success-icon">🎉</div>
+                <div class="success-title">予約が完了しました！</div>
+                
+                <div class="booking-id">
+                    予約ID: <span id="bookingIdDisplay">BK20260105001</span>
+                </div>
+                
+                <div class="summary-card">
+                    <div class="summary-row">
+                        <span>車種:</span>
+                        <span id="successCarType">セダン</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>サービス:</span>
+                        <span id="successService">スタンダード</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>日付:</span>
+                        <span id="successDate">2024-01-01</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>時間:</span>
+                        <span id="successTime">9:00-12:00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>料金:</span>
+                        <span id="successPrice">$15.00</span>
+                    </div>
+                </div>
+                
+                <div style="background: rgba(255,255,255,0.2); padding: 16px; border-radius: 8px; margin-top: 20px;">
+                    <div style="font-size: 16px; margin-bottom: 8px;">📍 次のステップ:</div>
+                    <div style="font-size: 14px;">
+                        作業者から位置情報の共有をお願いする<br>
+                        メッセージが届きます。<br>
+                        駐車場所を教えてください。
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- ユーザー情報表示 -->
         <div class="info-box" id="userInfo" style="display:none;">
             <div class="user-info">
                 👤 <span id="userName"></span>
